@@ -1,0 +1,15 @@
+{
+  "apps": [
+    {
+      "name": "GPS.phototracker",
+      "bundleIdentifier": "ru.flat112.AntTracker",
+      "version": "1.0",
+      "versionDate": "2024-06-13",
+      "size": 5014306,
+      "downloadURL": "https://github.com/thxlenSoju/iosgodsapps/releases/download/ipa/GPS.phototracker.ipa",
+      "developerName": "",
+      "localizedDescription": "",
+      "iconURL": "https://raw.githubusercontent.com/thxlenSoju/iosgodsapps/main/icons/ru.flat112.AntTracker.png"
+    }
+  ]
+}
