@@ -1,4 +1,3 @@
-
 import requests
 import zipfile
 import plistlib
@@ -35,7 +34,6 @@ def get_single_bundle_id(url, name="temp.ipa"):
                     icon_path = os.path.join(
                         folder_path, pl["CFBundleIconFiles"][0])
                 except:
-                    # index [0] out-of-range: empty icon list
                     return bundleId
             if "CFBundleIcons" in pl.keys():
                 try:
@@ -51,8 +49,6 @@ def get_single_bundle_id(url, name="temp.ipa"):
                         shutil.copyfileobj(origin, dst)
                 except:
                     pass
-            else:  # no icon info
-                pass
 
             return bundleId
 
@@ -63,7 +59,14 @@ def generate_bundle_id_csv(token):
     repo = g.get_repo("thxlenSoju/RepoStart")  # Ändern Sie hier auf Ihr Repository
     releases = repo.get_releases()
 
-    df = pd.DataFrame(columns=["name", "bundleId"])
+    # Überprüfen, ob die Datei existiert
+    if not os.path.exists("bundleId.csv"):
+        # Erstellen Sie eine leere Datei mit Kopfzeile
+        with open("bundleId.csv", "w") as f:
+            f.write("name,bundleId\n")
+
+    # Lesen Sie die CSV-Datei
+    df = pd.read_csv("bundleId.csv")
 
     for release in releases:
         date = release.created_at.strftime("%Y-%m-%d")
@@ -96,7 +99,7 @@ def generate_bundle_id_csv(token):
                 ignore_index=True
             )
 
-    df.to_csv("bundleIdmap.csv", index=False)
+    df.to_csv("bundleId.csv", index=False)
 
 if __name__ == "__main__":
     generate_bundle_id_csv(GITHUB_TOKEN)
