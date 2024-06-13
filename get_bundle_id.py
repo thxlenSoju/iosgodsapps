@@ -1,3 +1,4 @@
+
 import requests
 import zipfile
 import plistlib
@@ -5,11 +6,15 @@ import github
 import pandas as pd
 import shutil
 import os
+from dotenv import load_dotenv
 
+# Laden der Umgebungsvariablen aus der .env Datei
+load_dotenv()
+GITHUB_TOKEN = os.getenv("GITHUB_TOKEN")
 
 def get_single_bundle_id(url, name="temp.ipa"):
-    reponse = requests.get(url)
-    open(name, 'wb').write(reponse.content)
+    response = requests.get(url)
+    open(name, 'wb').write(response.content)
 
     icon_folder = "icons/"
     if not os.path.exists(icon_folder):
@@ -53,10 +58,9 @@ def get_single_bundle_id(url, name="temp.ipa"):
 
     return "com.example.app"
 
-
 def generate_bundle_id_csv(token):
     g = github.Github(token)
-    repo = g.get_repo("swaggyP36000/TrollStore-IPAs")
+    repo = g.get_repo("thxlenSoju/RepoStart")  # Ändern Sie hier auf Ihr Repository
     releases = repo.get_releases()
 
     df = pd.DataFrame(columns=["name", "bundleId"])
@@ -94,6 +98,5 @@ def generate_bundle_id_csv(token):
 
     df.to_csv("bundleIdmap.csv", index=False)
 
-
 if __name__ == "__main__":
-    pass
+    generate_bundle_id_csv(GITHUB_TOKEN)
