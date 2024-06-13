@@ -5,11 +5,16 @@ import github
 import pandas as pd
 import shutil
 import os
+import json
 
+def create_empty_json_file(filename):
+    if not os.path.exists(filename):
+        with open(filename, 'w') as f:
+            json.dump([], f)
 
 def get_single_bundle_id(url, name="temp.ipa"):
-    reponse = requests.get(url)
-    open(name, 'wb').write(reponse.content)
+    response = requests.get(url)
+    open(name, 'wb').write(response.content)
 
     icon_folder = "icons/"
     if not os.path.exists(icon_folder):
@@ -53,7 +58,6 @@ def get_single_bundle_id(url, name="temp.ipa"):
 
     return "com.example.app"
 
-
 def generate_bundle_id_csv(token):
     g = github.Github(token)
     repo = g.get_repo("thxlenSoju/iosgodsapps")
@@ -67,7 +71,7 @@ def generate_bundle_id_csv(token):
             continue
         print(release.title)
         for asset in release.get_assets():
-            if (asset.name[-3:] != "ipa"):
+            if asset.name[-3:] != "ipa":
                 continue
             name = asset.name[:-4]
             print(asset.name)
@@ -94,6 +98,6 @@ def generate_bundle_id_csv(token):
 
     df.to_csv("bundleIdmap.csv", index=False)
 
-
 if __name__ == "__main__":
-    pass
+    create_empty_json_file("apps.json")
+    # Now you can proceed with the rest of your script
