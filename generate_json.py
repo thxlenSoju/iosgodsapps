@@ -8,9 +8,9 @@ import mistletoe
 import pandas as pd
 from bs4 import BeautifulSoup
 from github import Github
-from dotenv import load_dotenv
 
 from get_bundle_id import get_single_bundle_id
+
 
 def transform_object(original_object):
     transformed_object = {**original_object, "apps": None}
@@ -66,20 +66,15 @@ def transform_object(original_object):
 
     return transformed_object
 
+
 if __name__ == "__main__":
-    # Laden der Umgebungsvariablen aus der .env Datei
-    load_dotenv()
-    token = os.getenv("GITHUB_TOKEN")
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-t", "--token", help="Github token")
+    args = parser.parse_args()
+    token = args.token
 
-    if not token:
-        print("Error: A GitHub token must be provided in the .env file.")
-        exit(1)
-
-    if os.path.exists("apps.json"):
-        with open("apps.json", "r") as f:
-            data = json.load(f)
-    else:
-        data = {"apps": []}  # Initialisieren der Daten, wenn die Datei nicht existiert
+    with open("apps.json", "r") as f:
+        data = json.load(f)
 
     if os.path.exists("bundleId.csv"):
         df = pd.read_csv("bundleId.csv")
@@ -96,6 +91,7 @@ if __name__ == "__main__":
         md_df = pd.read_html(StringIO(str(table)), keep_default_na=False)[0]
         md_df["App Name"] = md_df["App Name"].str.replace(" ", "").str.lower()
 
+    # clear apps
     data["apps"] = []
 
     g = Github(token)
@@ -153,4 +149,4 @@ if __name__ == "__main__":
         json.dump(data, json_file, indent=2)
 
     with open("apps.json", "w") as file:
-        json.dump(transform_object(data), file, indent=2)
+        json.dump(transform_object(data), file, indent=2)       

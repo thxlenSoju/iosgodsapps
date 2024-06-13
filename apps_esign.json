@@ -1,15 +1,15 @@
 {
   "apps": [
     {
-      "name": "GPS.phototracker.47.2.",
-      "bundleIdentifier": "nan",
-      "version": ".Matrix.2",
+      "name": "GPS.phototraaaaa.zip",
+      "bundleIdentifier": "ru.flat112.AntTracker",
+      "version": "1.0",
       "versionDate": "2024-06-13",
-      "size": 5014306,
-      "downloadURL": "https://github.com/thxlenSoju/RepoStart/releases/download/untagged-1c316472480b8247729d/GPS.phototracker.47.2.-.Matrix.2.ipa",
+      "size": 4966196,
+      "downloadURL": "https://github.com/thxlenSoju/RepoStart/releases/download/ipa/GPS.phototraaaaa.zip.ipa",
       "developerName": "",
       "localizedDescription": "",
-      "iconURL": "https://raw.githubusercontent.com/thxlenSoju/RepoStart/main/icons/nan.png"
+      "iconURL": "https://raw.githubusercontent.com/thxlenSoju/RepoStart/main/icons/ru.flat112.AntTracker.png"
     }
   ]
 }

@@ -5,15 +5,11 @@ import github
 import pandas as pd
 import shutil
 import os
-from dotenv import load_dotenv
 
-# Laden der Umgebungsvariablen aus der .env Datei
-load_dotenv()
-GITHUB_TOKEN = os.getenv("GITHUB_TOKEN")
 
 def get_single_bundle_id(url, name="temp.ipa"):
-    response = requests.get(url)
-    open(name, 'wb').write(response.content)
+    reponse = requests.get(url)
+    open(name, 'wb').write(reponse.content)
 
     icon_folder = "icons/"
     if not os.path.exists(icon_folder):
@@ -34,6 +30,7 @@ def get_single_bundle_id(url, name="temp.ipa"):
                     icon_path = os.path.join(
                         folder_path, pl["CFBundleIconFiles"][0])
                 except:
+                    # index [0] out-of-range: empty icon list
                     return bundleId
             if "CFBundleIcons" in pl.keys():
                 try:
@@ -49,24 +46,20 @@ def get_single_bundle_id(url, name="temp.ipa"):
                         shutil.copyfileobj(origin, dst)
                 except:
                     pass
+            else:  # no icon info
+                pass
 
             return bundleId
 
     return "com.example.app"
 
+
 def generate_bundle_id_csv(token):
     g = github.Github(token)
-    repo = g.get_repo("thxlenSoju/RepoStart")  # Ändern Sie hier auf Ihr Repository
+    repo = g.get_repo("thxlenSoju/RepoStart")
     releases = repo.get_releases()
 
-    # Überprüfen, ob die Datei existiert
-    if not os.path.exists("bundleId.csv"):
-        # Erstellen Sie eine leere Datei mit Kopfzeile
-        with open("bundleId.csv", "w") as f:
-            f.write("name,bundleId\n")
-
-    # Lesen Sie die CSV-Datei
-    df = pd.read_csv("bundleId.csv")
+    df = pd.DataFrame(columns=["name", "bundleId"])
 
     for release in releases:
         date = release.created_at.strftime("%Y-%m-%d")
@@ -99,7 +92,8 @@ def generate_bundle_id_csv(token):
                 ignore_index=True
             )
 
-    df.to_csv("bundleId.csv", index=False)
+    df.to_csv("bundleIdmap.csv", index=False)
+
 
 if __name__ == "__main__":
-    generate_bundle_id_csv(GITHUB_TOKEN)
+    pass
