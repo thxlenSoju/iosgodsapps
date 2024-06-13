@@ -1,4 +1,3 @@
-
 import argparse
 import json
 import os
@@ -10,6 +9,12 @@ from bs4 import BeautifulSoup
 from github import Github
 
 from get_bundle_id import get_single_bundle_id
+
+
+def create_empty_json_file(filename):
+    if not os.path.exists(filename):
+        with open(filename, 'w') as f:
+            json.dump({"apps": []}, f)
 
 
 def transform_object(original_object):
@@ -72,6 +77,8 @@ if __name__ == "__main__":
     parser.add_argument("-t", "--token", help="Github token")
     args = parser.parse_args()
     token = args.token
+
+    create_empty_json_file("apps.json")
 
     with open("apps.json", "r") as f:
         data = json.load(f)
@@ -149,4 +156,4 @@ if __name__ == "__main__":
         json.dump(data, json_file, indent=2)
 
     with open("apps.json", "w") as file:
-        json.dump(transform_object(data), file, indent=2)       
+        json.dump(transform_object(data), file, indent=2)
