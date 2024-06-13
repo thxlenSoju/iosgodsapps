@@ -95,7 +95,7 @@ if __name__ == "__main__":
     data["apps"] = []
 
     g = Github(token)
-    repo = g.get_repo("thxlenSoju/RepoStart")
+    repo = g.get_repo("thxlenSoju/iosgodsapps")
     releases = repo.get_releases()
 
     for release in releases:
@@ -139,7 +139,7 @@ if __name__ == "__main__":
                     "downloadURL": asset.browser_download_url,
                     "developerName": dev_name,
                     "localizedDescription": desc,
-                    "iconURL": f"https://raw.githubusercontent.com/thxlenSoju/RepoStart/main/icons/{bundle_id}.png",
+                    "iconURL": f"https://raw.githubusercontent.com/thxlenSoju/iosgodsapps/main/icons/{bundle_id}.png",
                 }
             )
 
