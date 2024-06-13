@@ -99,8 +99,4 @@ def generate_bundle_id_csv(token):
     df.to_csv("bundleIdmap.csv", index=False)
 
 if __name__ == "__main__":
-<<<<<<< HEAD
     generate_bundle_id_csv(GITHUB_TOKEN)
-=======
-    generate_bundle_id_csv(GITHUB_TOKEN)
->>>>>>> 4dbe12c557d4c4e0b41d2d213a9a923ae294abde
